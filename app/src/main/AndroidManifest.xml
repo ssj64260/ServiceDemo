@@ -14,7 +14,7 @@
         <service
             android:name=".service.LocationService"
             android:icon="@mipmap/ic_launcher"
-            android:label="音乐播放器" />
+            android:label="定时发送定位" />
 
         <activity android:name=".ui.MainActivity">
             <intent-filter>

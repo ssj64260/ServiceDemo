@@ -23,7 +23,6 @@ public class LocationActivity extends BaseActivity {
 
     private boolean mIsUpload;
     private Intent mServiceIntent;
-    private boolean mBound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

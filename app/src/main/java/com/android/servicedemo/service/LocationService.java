@@ -2,12 +2,13 @@ package com.android.servicedemo.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.android.servicedemo.utils.DateTimeUtils;
 import com.android.servicedemo.utils.ThreadPoolUtils;
-import com.orhanobut.logger.Logger;
+import com.android.servicedemo.utils.ToastMaster;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,12 +23,15 @@ public class LocationService extends Service {
     private static final String END_TIME = "18:00";
 
     private int mStartId;
-
     private int mTimes = 0;
+    private Handler mHandler;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mHandler = new Handler(getMainLooper());
+
         ThreadPoolUtils.getInstache().scheduledRate(new Runnable() {
             @Override
             public void run() {
@@ -37,7 +41,12 @@ public class LocationService extends Service {
 
                 if (currentTime >= startTime && currentTime <= endTime) {
                     mTimes++;
-                    Logger.w(String.valueOf(mTimes));
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastMaster.toast(String.valueOf(mTimes));
+                        }
+                    });
                 }
             }
         }, 100, PERIOD, TimeUnit.MILLISECONDS);
@@ -47,6 +56,7 @@ public class LocationService extends Service {
     public void onDestroy() {
         super.onDestroy();
         ThreadPoolUtils.getInstache().scheduledShutDown(0);
+        mHandler.removeCallbacksAndMessages(null);
         stopSelf(mStartId);
     }
 
