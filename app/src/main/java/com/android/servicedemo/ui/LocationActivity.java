@@ -46,6 +46,7 @@ public class LocationActivity extends BaseActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 PreferencesUtils.setData(FILE_APP_SETTING, KEY_IS_UPLOAD_LOCATION, isChecked);
                 if (isChecked) {
+
                     startService(mServiceIntent);
                 } else {
                     stopService(mServiceIntent);
