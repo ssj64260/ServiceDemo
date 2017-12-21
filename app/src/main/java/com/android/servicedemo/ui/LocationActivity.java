@@ -123,8 +123,9 @@ public class LocationActivity extends BaseActivity {
         swUpload.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                PreferencesUtils.setData(FILE_APP_SETTING, KEY_IS_UPLOAD_LOCATION, isChecked);
-                if (isChecked) {
+                mIsUpload = isChecked;
+                PreferencesUtils.setData(FILE_APP_SETTING, KEY_IS_UPLOAD_LOCATION, mIsUpload);
+                if (mIsUpload) {
                     startService(mServiceIntent);
                     bindLoactionService();
                 } else {
