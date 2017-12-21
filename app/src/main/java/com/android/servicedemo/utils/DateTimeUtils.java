@@ -55,6 +55,11 @@ public class DateTimeUtils {
         return enShortTimeFormat.format(new Date());
     }
 
+    // 获取当前时间，格式：23:33
+    public static String getEnShortTime(Date date) {
+        return enShortTimeFormat.format(date);
+    }
+
     // 获取当前日期时间，格式：2016年11月24日 23时33分33秒
     public static String getCnLongDateTime() {
         return cnLongDateTimeFormat.format(new Date());
@@ -251,6 +256,16 @@ public class DateTimeUtils {
     public static Date StringToTimeIgnoreDate(String dateTimeStr) {
         try {
             return enLongTimeFormat.parse(dateTimeStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // 日期字符串转时间对象（忽然年月日）
+    public static Date StringToShortTimeIgnoreDate(String dateTimeStr) {
+        try {
+            return enShortTimeFormat.parse(dateTimeStr);
         } catch (ParseException e) {
             e.printStackTrace();
             return null;

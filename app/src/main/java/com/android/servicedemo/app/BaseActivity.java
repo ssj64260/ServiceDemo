@@ -11,7 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.android.servicedemo.ui.DefaultProgressDialog;
+import com.android.servicedemo.ui.dialog.DefaultProgressDialog;
 import com.orhanobut.logger.Logger;
 
 /**

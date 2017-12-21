@@ -1,4 +1,4 @@
-package com.android.servicedemo.ui;
+package com.android.servicedemo.ui.dialog;
 
 import android.app.ProgressDialog;
 import android.content.Context;

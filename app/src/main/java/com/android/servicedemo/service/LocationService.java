@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -22,26 +23,37 @@ import java.util.concurrent.TimeUnit;
 public class LocationService extends Service {
 
     private static final int REQUEST_ID_LOCATION = 2333;//上传定位通知栏请求ID
-    private static final int PERIOD = 5000;
-    private static final String START_TIME = "9:00";
-    private static final String END_TIME = "18:00";
+    private static final int PERIOD = 1000;
+    private String mStartTime = "9:00";
+    private String mEndTime = "18:00";
 
     private int mStartId;
     private int mTimes = 0;
     private Handler mHandler;
 
+    private LocationBinder mBinder;
+
+    public class LocationBinder extends Binder {
+        public void setStartTime(String startTime) {
+            mStartTime = startTime;
+        }
+
+        public void setEndTime(String endTime) {
+            mEndTime = endTime;
+        }
+    }
+
     @Override
     public void onCreate() {
-        super.onCreate();
-
+        mBinder = new LocationBinder();
         mHandler = new Handler(getMainLooper());
         setNotification();
 
         ThreadPoolUtils.getInstache().scheduledRate(new Runnable() {
             @Override
             public void run() {
-                final float startTime = getFloatByTime(START_TIME);
-                final float endTime = getFloatByTime(END_TIME);
+                final float startTime = getFloatByTime(mStartTime);
+                final float endTime = getFloatByTime(mEndTime);
                 final float currentTime = getFloatByTime(DateTimeUtils.getEnShortTime());
 
                 if (currentTime >= startTime && currentTime <= endTime) {
@@ -55,6 +67,8 @@ public class LocationService extends Service {
                 }
             }
         }, 100, PERIOD, TimeUnit.MILLISECONDS);
+
+        super.onCreate();
     }
 
     @Override
@@ -69,7 +83,7 @@ public class LocationService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
     }
 
     @Override
