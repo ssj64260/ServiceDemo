@@ -24,7 +24,7 @@ public class LocationService extends Service {
 
     private static final int REQUEST_ID_LOCATION = 2333;//上传定位通知栏请求ID
     private static final int PERIOD = 1000;
-    private String mStartTime = "9:00";
+    private String mStartTime = "09:00";
     private String mEndTime = "18:00";
 
     private int mStartId;
